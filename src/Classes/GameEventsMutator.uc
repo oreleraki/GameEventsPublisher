@@ -31,17 +31,18 @@ function PreBeginPlay() {
 
 function PrintHello() {
     Log("");
-    Log(" :=================================================:");
-    Log(" :    GameEventsMutator v0.2-alpha");
+    Log(" :============================================================:");
+    Log(" :    GameEventsMutator v0.3-alpha");
     Log(" :");
     Log(" :       ***  SETTINGS  ***");
-    Log(" : bEnabled                = " $ string(Config.bEnabled));
-    Log(" : Debug                   = " $ string(Config.Debug));
-    Log(" : WaitingPlayersDuration  = " $ string(Config.WaitingPlayersDuration));
-    Log(" : Host                    = " $ Config.Host);
-    Log(" : Path                    = " $ Config.Path);
-    Log(" : PasswordHeaderName      = " $ Config.PasswordHeaderName);
-    Log(" : Password                = " $ Config.Password);
-    Log(" :=================================================:");
+    Log(" : bEnabled                            = " $ string(Config.bEnabled));
+    Log(" : Debug                               = " $ string(Config.Debug));
+    Log(" : Host                                = " $ Config.Host);
+    Log(" : Path                                = " $ Config.Path);
+    Log(" : PasswordHeaderName                  = " $ Config.PasswordHeaderName);
+    Log(" : Password                            = " $ Config.Password);
+    Log(" : WaitingPlayersIntervalInSecs        = " $ string(Config.WaitingPlayersIntervalInSecs));
+    Log(" : WaitingPlayersIntervalInSecsExpired = " $ string(Config.WaitingPlayersIntervalInSecsExpired));
+    Log(" :============================================================:");
     Log("");
 }

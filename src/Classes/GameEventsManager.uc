@@ -52,12 +52,22 @@ function Publish(Name eventName) {
 auto state WaitingPlayers {
 
     function Timer() {
-        Publish('WaitingPlayersEnd');
+        if (Level.TimeSeconds < Config.WaitingPlayersIntervalInSecsExpired)
+        {
+            Publish(GetStateName());
+        }
+        else
+        {
+            Publish('WaitingPlayersEnd');
+            LogInternal("GameEventsManager.WaitingPlayersExpired("$Config.WaitingPlayersIntervalInSecsExpired$")");
+            Disable('Timer');
+        }
     }
 
 Begin:
     Publish(GetStateName());
-    SetTimer(Config.WaitingPlayersDuration, false);
+    // SetTimer(Config.WaitingPlayersDuration, false);
+    SetTimer(Config.WaitingPlayersIntervalInSecs, true);
 }
 
 state MatchStarted {

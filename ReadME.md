@@ -1,9 +1,8 @@
 # Game Events Publisher
 
 UnrealTournament package for publishing selected game events to an HTTP Endpoint.
-Only works for DeathMatchPlus games.
 
-Version: 0.2-alpha<br>
+Version: 0.3-alpha<br>
 Author: Orel Eraki<br>
 Email: orel.eraki@gmail.com<br>
 
@@ -30,13 +29,14 @@ The following are the default configuration which will be saved at initial loadi
 ```ini
 [GameEventsPublisher.GameEventsConfig]
 bEnabled=True
-WaitingPlayersDuration=300
 Host=localhost
 Port=7790
 Path=
 PasswordHeaderName=Authorization
 Password=
 Debug=False
+WaitingPlayersIntervalInSecs=60
+WaitingPlayersIntervalInSecsExpired=600
 ```
 
 ## Requests
@@ -46,9 +46,10 @@ They will be sent to "http://Host:Port/Path"
 ## Events Names
 | Name                  | Description |
 | -----------           | ----------- |
-| WaitingPlayers        | When map is loaded.
-| WaitingPlayersEnd     | After configuration(`WaitingPlayersDuration`) has reached.
+| WaitingPlayers        | When map is loaded and every `WaitingPlayersIntervalInSecs` Interval.
+| WaitingPlayersEnd     | After configuration(`WaitingPlayersIntervalInSecsExpired`) has reached.
 | MatchStarted          | Players started playing.
+| FlagCapture          	| Flag has been captured.
 | MatchEnded            | Match ended.
 
 Note: All events are sent in capital letters.
