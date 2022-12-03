@@ -3,7 +3,7 @@
 UnrealTournament package for publishing selected game events to an HTTP Endpoint.
 Only works for DeathMatchPlus games.
 
-Version: 0.1-alpha<br>
+Version: 0.2-alpha<br>
 Author: Orel Eraki<br>
 Email: orel.eraki@gmail.com<br>
 

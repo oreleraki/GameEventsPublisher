@@ -2,29 +2,37 @@ class GameEventsMutator extends Mutator;
 
 var GameEventsConfig Config;
 var GameEventsManager Manager;
+var GameEventsMessagingSpectator MessagingSpectator;
 
 function PreBeginPlay() {
-    local bool bIsTournament;
+    // local bool bIsTournament;
 
     super.PreBeginPlay();
 
     Config = new class'GameEventsConfig'();
     Config.SaveConfig();
 
-    bIsTournament = DeathMatchPlus(Level.Game).Default.bTournament;
+    // bIsTournament = DeathMatchPlus(Level.Game).Default.bTournament;
     PrintHello();
-    Log("[GameEvents]: Is Tournament ? "$bIsTournament);
-    if (bIsTournament && Config.bEnabled)
+    // Log("[GameEvents]: Is Tournament ? "$bIsTournament);
+    if (Config.bEnabled)
     {
         Manager = Level.Spawn(class'GameEventsManager', Self, 'EndGame');
         Manager.Setup(Config);
+
+        MessagingSpectator = Level.Game.Spawn(class'GameEventsMessagingSpectator', Manager);
+        // Level.Game.RegisterMessageMutator(MessagingSpectator);
+        if (Manager != None && MessagingSpectator != None)
+        {
+            Log(Self$" Initialized!", class.Name);
+        }
     }
 }
 
 function PrintHello() {
     Log("");
     Log(" :=================================================:");
-    Log(" :    GameEventsMutator has Initialized!");
+    Log(" :    GameEventsMutator v0.2-alpha");
     Log(" :");
     Log(" :       ***  SETTINGS  ***");
     Log(" : bEnabled                = " $ string(Config.bEnabled));

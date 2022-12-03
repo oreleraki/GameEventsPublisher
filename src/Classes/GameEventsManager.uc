@@ -16,6 +16,10 @@ function StartMatch() {
     GotoState('MatchStarted');
 }
 
+function FlagCapture(PlayerReplicationInfo scorerPRI, CTFFlag flag) {
+    Publish('FlagCapture');
+}
+
 function Trigger(Actor Other, Pawn EventInstigator) {
     if (Other == Level.Game) {
         LogInternal(Self$"(Other.Name="$Other.Name$") by "$EventInstigator.Name);
