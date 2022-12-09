@@ -32,12 +32,13 @@ function PreBeginPlay() {
 function PrintHello() {
     Log("");
     Log(" :============================================================:");
-    Log(" :    GameEventsMutator v0.3-alpha");
+    Log(" :    GameEventsMutator v0.3.1-alpha");
     Log(" :");
     Log(" :       ***  SETTINGS  ***");
     Log(" : bEnabled                            = " $ string(Config.bEnabled));
     Log(" : Debug                               = " $ string(Config.Debug));
     Log(" : Host                                = " $ Config.Host);
+    Log(" : Port                                = " $ string(Config.Port));
     Log(" : Path                                = " $ Config.Path);
     Log(" : PasswordHeaderName                  = " $ Config.PasswordHeaderName);
     Log(" : Password                            = " $ Config.Password);

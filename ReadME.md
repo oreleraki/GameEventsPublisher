@@ -2,7 +2,7 @@
 
 UnrealTournament package for publishing selected game events to an HTTP Endpoint.
 
-Version: 0.3-alpha<br>
+Version: 0.3.1-alpha<br>
 Author: Orel Eraki<br>
 Email: orel.eraki@gmail.com<br>
 
