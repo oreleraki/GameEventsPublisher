@@ -13,7 +13,7 @@ static function string CreateJsonPairAsString(string key, string value) {
 }
 
 static function string WrapIntoJsonString(string value) {
-    return "\""$value$"\"";
+    return "\""$Replace(value, "\\", "\\\\")$"\"";
 }
 
 static function string ConvertIntoJsonBool(bool value) {
