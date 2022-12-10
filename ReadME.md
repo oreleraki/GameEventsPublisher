@@ -49,7 +49,7 @@ They will be sent to "http://Host:Port/Path"
 | WaitingPlayers        | When map is loaded and every `WaitingPlayersIntervalInSecs` Interval.
 | WaitingPlayersEnd     | After configuration(`WaitingPlayersIntervalInSecsExpired`) has reached.
 | MatchStarted          | Players started playing.
-| FlagCapture          	| Flag has been captured.
+| FlagCapture          	| Flag has been captured. When occur `InstigatorId` will be populated with PlayerId.
 | MatchEnded            | Match ended.
 
 Note: All events are sent in capital letters.
@@ -59,6 +59,7 @@ Note: All events are sent in capital letters.
 ```json
 {
 	"Name": "MATCHENDED",
+	"InstigatorId": -1,
 	"IP": "0.0.0.0:7777",
 	"GameType": "TeamGamePlus",
 	"Map": "DM-Deck16][",

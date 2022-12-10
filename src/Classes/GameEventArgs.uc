@@ -1,6 +1,7 @@
 class GameEventArgs extends Object;
 
 var String Name;
+var int InstigatorId;
 var String IP;
 var String GameType;
 var String Map;
@@ -41,6 +42,7 @@ function string ConvertToJson(String teamInfoJson, String playerInfoJson) {
     helper = class'GameEventsPublisherHelper';
 
     str = str$"\"Name\":"$helper.static.WrapIntoJsonString(Name);
+    str = str$",\"InstigatorId\":"$InstigatorId;
     str = str$",\"IP\":"$helper.static.WrapIntoJsonString(IP);
     str = str$",\"GameType\":"$helper.static.WrapIntoJsonString(GameType);
     str = str$",\"Map\":"$helper.static.WrapIntoJsonString(Map);
@@ -87,7 +89,7 @@ function string ConvertToJson(String teamInfoJson, String playerInfoJson) {
 }
 
 // Creator
-static function GameEventArgs Create(LevelInfo Level, Name stateName) {
+static function GameEventArgs Create(LevelInfo Level, Name stateName, int instigatorId) {
     local GameEventArgs arg;
     local TournamentGameReplicationInfo tgri;
     local DeathMatchPlus deathMatchGameInfo;
@@ -99,6 +101,7 @@ static function GameEventArgs Create(LevelInfo Level, Name stateName) {
 
 	arg = new class'GameEventArgs';
     arg.Name = CAPS(stateName);
+    arg.InstigatorId = instigatorId;
     arg.IP = Level.GetAddressURL();
     arg.MaxPlayers = Level.Game.MaxPlayers;
     arg.Map = Left(string(Level), InStr(string(Level), ".")); // Level.GetMapName(Level.Game.Default.MapPrefix, "", 0);

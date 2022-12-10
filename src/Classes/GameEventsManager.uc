@@ -17,7 +17,7 @@ function StartMatch() {
 }
 
 function FlagCapture(PlayerReplicationInfo scorerPRI, CTFFlag flag) {
-    Publish('FlagCapture');
+    Publish('FlagCapture', scorerPRI.PlayerId);
 }
 
 function Trigger(Actor Other, Pawn EventInstigator) {
@@ -35,11 +35,11 @@ function LogInternal(String text) {
     Log("[GameEvents]:"@text, 'GameEventsManager');
 }
 
-function Publish(Name eventName) {
+function Publish(Name eventName, int instigatorId) {
     local GameEventArgs arg;
 
     LogInternal("GameEventsManager.Publish(eventName="$eventName$")");
-    arg = class'GameEventArgs'.static.Create(Level, eventName);
+    arg = class'GameEventArgs'.static.Create(Level, eventName, instigatorId);
     class'GameEventArgs'.static.PrintPlayers(arg);
     Submitter.OpenAndSend(Config.Host, Config.Port, Config.Path, Config.PasswordHeaderName, Config.Password, arg.ConvertToJson(Config.TeamInfoJson, Config.PlayerInfoJson), Config.Debug);
 }
@@ -54,18 +54,18 @@ auto state WaitingPlayers {
     function Timer() {
         if (Level.TimeSeconds < Config.WaitingPlayersIntervalInSecsExpired)
         {
-            Publish(GetStateName());
+            Publish(GetStateName(), -1);
         }
         else
         {
-            Publish('WaitingPlayersEnd');
+            Publish('WaitingPlayersEnd', -1);
             LogInternal("GameEventsManager.WaitingPlayersExpired("$Config.WaitingPlayersIntervalInSecsExpired$")");
             Disable('Timer');
         }
     }
 
 Begin:
-    Publish(GetStateName());
+    Publish(GetStateName(), -1);
     // SetTimer(Config.WaitingPlayersDuration, false);
     SetTimer(Config.WaitingPlayersIntervalInSecs, true);
 }
@@ -73,13 +73,13 @@ Begin:
 state MatchStarted {
 
 Begin:
-    Publish('MatchStarted');
+    Publish('MatchStarted', -1);
 }
 
 state MatchEnded {
 
 Begin:
-    Publish('MatchEnded');
+    Publish('MatchEnded', -1);
 }
 // EOF States
 
@@ -88,7 +88,7 @@ function PrintCurrentInformation() {
     local int i;
     local GameEventArgs arg;
 
-    arg = class'GameEventArgs'.static.Create(Level, GetStateName());
+    arg = class'GameEventArgs'.static.Create(Level, GetStateName(), -1);
     Log("GlobalTimer => NetWait: "$(DeathMatchPlus(Level.Game).NetWait));
     Log("GlobalTimer => ElapsedTime: "$DeathMatchPlus(Level.Game).ElapsedTime);
     Log("GlobalTimer => TimeSeconds: "$Level.TimeSeconds);
