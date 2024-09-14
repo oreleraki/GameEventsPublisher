@@ -36,18 +36,18 @@ function Resolved(IpAddr Addr) {
   ipAddrServerIpAddr.Addr = Addr.Addr;
   ipAddrServerIpAddr.Port = iHostPort;
 
-  Log("++ [GameEndPublisher]: Successfully resolved Server IP Address["$ipAddrServerIpAddr.Addr$"]");
+  Log("++ [GameEventsPublisher] Successfully resolved Server IP Address["$ipAddrServerIpAddr.Addr$"]");
 
   if (BindPort() == 0)
   {
-    Log("++ [GameEndPublisher]: Failed to resolve port:"$ipAddrServerIpAddr.Port);
+    Log("++ [GameEventsPublisher] Failed to resolve port:"$ipAddrServerIpAddr.Port);
     return;
   }
   Open(ipAddrServerIpAddr);
 }
 
 function ResolveFailed() {
-    Log("++ [GameEndPublisher]: Failed to resolve ip address:"$sHost);
+    Log("++ [GameEventsPublisher] Failed to resolve ip address:"$sHost);
 }
 
 function Disconnect()
@@ -58,13 +58,13 @@ function Disconnect()
 
 event Opened()
 {
-  Log("++ [GameEndPublisher]: Link is open.");
+  Log("++ [GameEventsPublisher] Link is open.");
   GotoState('Submitting');
 }
 
 event Closed()
 {
-  Log("++ [GameEndPublisher]: Lost connection to server.");
+  Log("++ [GameEventsPublisher] Lost connection to server.");
 }
 
 // FUNCTION ProccessInput / Standard Processing Function
@@ -128,7 +128,7 @@ state Submitting
 
     if (IsError)
     {
-      Log("++ [GameEndPublisher]: Error! " $ ErrorMessage);
+      Log("++ [GameEventsPublisher] Error! " $ ErrorMessage);
       Disconnect();
       return;
     }
@@ -140,7 +140,7 @@ state Submitting
   }
 
 Begin:
-    Log("++ [GameEndPublisher] Submitting:"@sData);
+    Log("++ [GameEventsPublisher] Submitting:"@sData);
     SendBufferedData("POST /"$sPath$" HTTP/1.0" $ CR$LF);
 	  SendBufferedData("User-Agent: Unreal" $ CR$LF);
 	  SendBufferedData("Host:" @ sHost$":"$iHostPort$CR$LF);
@@ -165,6 +165,6 @@ state Submitted
 
 Begin:
     bIsConnected = true;
-    Log("Successfully sent data to server.", Class.Name);
+    Log("++ [GameEventsPublisher] Successfully sent data to server.", Class.Name);
 }
 // EOF States

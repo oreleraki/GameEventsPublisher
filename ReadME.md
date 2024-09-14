@@ -2,9 +2,19 @@
 
 UnrealTournament package for publishing selected game events to an HTTP Endpoint.
 
-Version: 0.3.1-alpha<br>
+Version: 0.3.2-alpha<br>
 Author: Orel Eraki<br>
 Email: orel.eraki@gmail.com<br>
+
+## Change Log
+Can be found at [*changelog.txt*](changelog.txt)
+
+## Dependencies
+- Core
+- Engine
+- IpDrv
+- Botpack
+- UBrowser
 
 ## Installations
 First copy *GameEventsPublisher.u* and *GameEventsPublisher.int* into *System* folder.
@@ -23,6 +33,10 @@ ServerActors=GameEventsPublisher.GameEventsPublisherSA
 2. Mutator: For only loading it when you want to.
 Name: `GameEventsPublisher.GameEventsMutator`
 
+## Upgrade from..
+### 0.3.1-alpha
+- Remove or Replace configuration properties of ***TeamInfoJson*** and ***PlayerInfoJson*** as below. [Configuration](#Configuration)
+
 ## Configuration
 The following are the default configuration which will be saved at initial loading.
 
@@ -37,6 +51,8 @@ Password=
 Debug=False
 WaitingPlayersIntervalInSecs=60
 WaitingPlayersIntervalInSecsExpired=600
+TeamInfoJson=%Index%,%Name%,%Score%
+PlayerInfoJson=%Id%,%Index%,%Name%,%Score%,%Ready%,%Password%,%Team%,%DieCount%,%KillCount%,%Spree%
 ```
 
 ## Requests
@@ -61,59 +77,56 @@ Note: All events are sent in capital letters.
 	"Name": "MATCHENDED",
 	"InstigatorId": -1,
 	"IP": "0.0.0.0:7777",
-	"GameType": "TeamGamePlus",
-	"Map": "DM-Deck16][",
-	"GamePassword": "testpass",
+	"GameType": "CTFGame",
+	"Map": "CTF-NaliTown",
+	"GamePassword": "",
 	"TimeSeconds": 120,
-	"TimeLimit": 3,
-	"FragLimit": 2,
-	"RemainingTime": 100,
-	"GoalTeamScore": 2,
-	"MaxPlayers": 2,
+	"TimeLimit": 1,
+	"FragLimit": 0,
+	"RemainingTime": 0,
+	"GoalTeamScore": 3,
+	"MaxPlayers": 10,
 	"NumPlayers": 2,
-	"MaxTeams": 4,
+	"MaxTeams": 2,
 	"Pauser": "",
-	"PlayersReady": false,
-	"MatchStarted": true,
+	"MatchStarted": false,
 	"MatchEnded": true,
 	"Teams": {
 		"Red": {
-			"Name": "Red",
 			"Index": 0,
-			"Score": 2
+			"Name": "Red",
+			"Score": 1
 		},
 		"Blue": {
-			"Name": "Blue",
 			"Index": 1,
-			"Score": 0
-		},
-		"Green": {
-			"Name": "Green",
-			"Index": 2,
-			"Score": 0
-		},
-		"Gold": {
-			"Name": "Gold",
-			"Index": 3,
+			"Name": "Blue",
 			"Score": 0
 		}
 	},
 	"Players": [
 		{
-			"Name": "Nighthawk",
-			"Index": 0,
 			"Id": 0,
-			"Ready": true,
-			"Password": "testpass",
-			"Team": 0
+			"Index": 0,
+			"Name": "Player1",
+			"Score": 8,
+			"Ready": false,
+			"Password": "",
+			"Team": 0,
+			"DieCount": 0,
+			"KillCount": 1,
+			"Spree": 1
 		},
 		{
-			"Name": "foobar",
-			"Index": 1,
 			"Id": 1,
-			"Ready": true,
-			"Password": "testpass",
-			"Team": 1
+			"Index": 1,
+			"Name": "Player2",
+			"Score": -1,
+			"Ready": false,
+			"Password": "",
+			"Team": 1,
+			"DieCount": 2,
+			"KillCount": 0,
+			"Spree": 0
 		}
 	]
 }

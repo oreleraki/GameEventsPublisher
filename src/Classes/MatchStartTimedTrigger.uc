@@ -2,12 +2,17 @@ class MatchStartTimedTrigger extends TimedTrigger;
 
 function PostBeginPlay()
 {
-    // Log("MatchStartTimedTrigger.PostBeginPlay => Level.Game.IsA('DeathMatchPlus')="$Level.Game.IsA('DeathMatchPlus')$", DeathMatchPlus(Level.Game).bRequireReady="$DeathMatchPlus(Level.Game).bRequireReady, 'GameEvents');
+    // Log("MatchStartTimedTrigger.PostBeginPlay => Level.Game.IsA('DeathMatchPlus')="$Level.Game.IsA('DeathMatchPlus')$", DeathMatchPlus(Level.Game).bRequireReady="$DeathMatchPlus(Level.Game).bRequireReady, 'GameEventsPublisher');
 }
 
 function Trigger(Actor Other, Pawn EventInstigator)
 {
-    Log("MatchStartTimedTrigger.Trigger => StartMatch(Other.Name="$Other.Name$", EventInstigator.Name="$EventInstigator.Name$")", 'GameEvents');
+    local string instigatorName;
+    if (EventInstigator != None)
+    {
+        instigatorName = EventInstigator.GetHumanName();
+    }
+    Log("MatchStartTimedTrigger.Trigger => StartMatch(Other.Name="$Other.Name$", EventInstigator.Name="$instigatorName$")", 'GameEventsPublisher');
     GameEventsManager(Owner).StartMatch();
 }
 

@@ -12,6 +12,19 @@ static function string CreateJsonPairAsString(string key, string value) {
     return "\""$key$"\":"@WrapIntoJsonString(value);
 }
 
+static function string CreateJsonPairAsStringWithEscape(string key, string value) {
+	local string escapedValue;
+	escapedValue = Replace(value, "\\", "\\b"); // Escapes backslashes.
+	escapedValue = Replace(value, "\"", "\\\""); // Escapes double quotes.
+	escapedValue = Replace(value, "\n", "\\n"); // Escapes newlines.
+	escapedValue = Replace(value, "\r", "\\r"); // Escapes carriage returns.
+	escapedValue = Replace(value, "\t", "\\t"); // Escapes tabs.
+	escapedValue = Replace(value, "\b", "\\b"); // Escapes backspaces.
+	escapedValue = Replace(value, "\f", "\\f"); // Escapes form feeds.
+
+    return "\""$key$"\":"@WrapIntoJsonString(escapedValue);
+}
+
 static function string WrapIntoJsonString(string value) {
     return "\""$Replace(value, "\\", "\\\\")$"\"";
 }

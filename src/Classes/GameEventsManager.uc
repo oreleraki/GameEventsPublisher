@@ -32,7 +32,7 @@ function Trigger(Actor Other, Pawn EventInstigator) {
 }
 
 function LogInternal(String text) {
-    Log("[GameEvents]:"@text, 'GameEventsManager');
+    Log("++ [GameEventsPublisher]"@text, 'GameEventsManager');
 }
 
 function Publish(Name eventName, int instigatorId) {
