@@ -63,8 +63,8 @@ function string ConvertToJson(String teamInfoJson, String playerInfoJson) {
     for (i = 0; i < MaxTeams; i++) {
         teamInfo = Teams[i];
         teamStr = teamInfoJson;
-        teamStr = helper.static.Replace(teamStr, "%Name%", helper.static.CreateJsonPairAsString("Name", teamInfo.Name));
         teamStr = helper.static.Replace(teamStr, "%Index%", helper.static.CreateJsonPairAsInt("Index", teamInfo.Index));
+        teamStr = helper.static.Replace(teamStr, "%Name%", helper.static.CreateJsonPairAsString("Name", teamInfo.Name));
         teamStr = helper.static.Replace(teamStr, "%Score%", helper.static.CreateJsonPairAsInt("Score", teamInfo.Score));
         teamsStr = teamsStr$Helper.static.WrapIntoJsonString(teamInfo.Name)$": {"$teamStr$"},";
     }
@@ -73,13 +73,16 @@ function string ConvertToJson(String teamInfoJson, String playerInfoJson) {
     for (i = 0; i < NumPlayers; i++) {
         playerInfo = GetPlayer(i);
         playerStr = playerInfoJson;
-        playerStr = Helper.static.Replace(playerStr, "%Name%", Helper.static.CreateJsonPairAsString("Name", playerInfo.Name));
-        playerStr = Helper.static.Replace(playerStr, "%Id%", Helper.static.CreateJsonPairAsInt("Id", playerInfo.Id));
-        playerStr = Helper.static.Replace(playerStr, "%Index%", Helper.static.CreateJsonPairAsInt("Index", playerInfo.Index));
-        playerStr = Helper.static.Replace(playerStr, "%Password%", Helper.static.CreateJsonPairAsString("Password", playerInfo.Password));
-        playerStr = Helper.static.Replace(playerStr, "%Score%", Helper.static.CreateJsonPairAsInt("Score", playerInfo.Score));
-        playerStr = Helper.static.Replace(playerStr, "%Ready%", Helper.static.CreateJsonPairAsBool("Ready", playerInfo.Ready));
-        playerStr = Helper.static.Replace(playerStr, "%Team%", Helper.static.CreateJsonPairAsInt("Team", playerInfo.Team));
+        playerStr = helper.static.Replace(playerStr, "%Id%", helper.static.CreateJsonPairAsInt("Id", playerInfo.Id));
+        playerStr = helper.static.Replace(playerStr, "%Index%", helper.static.CreateJsonPairAsInt("Index", playerInfo.Index));
+        playerStr = helper.static.Replace(playerStr, "%Name%", helper.static.CreateJsonPairAsStringWithEscape("Name", playerInfo.Name));
+        playerStr = helper.static.Replace(playerStr, "%Password%", helper.static.CreateJsonPairAsString("Password", playerInfo.Password));
+        playerStr = helper.static.Replace(playerStr, "%Team%", helper.static.CreateJsonPairAsInt("Team", playerInfo.Team));
+        playerStr = helper.static.Replace(playerStr, "%Ready%", helper.static.CreateJsonPairAsBool("Ready", playerInfo.Ready));
+        playerStr = helper.static.Replace(playerStr, "%Score%", helper.static.CreateJsonPairAsInt("Score", playerInfo.Score));
+        playerStr = helper.static.Replace(playerStr, "%DieCount%", helper.static.CreateJsonPairAsInt("DieCount", playerInfo.DieCount));
+        playerStr = helper.static.Replace(playerStr, "%KillCount%", helper.static.CreateJsonPairAsInt("KillCount", playerInfo.KillCount));
+        playerStr = helper.static.Replace(playerStr, "%Spree%", helper.static.CreateJsonPairAsInt("Spree", playerInfo.Spree));
         playersStr = playersStr$"{"$playerStr$"},";
     }
     playersStr = "\"Players\": ["$Mid(playersStr, 0, Len(playersStr)-1)$"]";
@@ -97,8 +100,10 @@ static function GameEventArgs Create(LevelInfo Level, Name stateName, int instig
     local GameEventsPlayerInfo playerInfo;
     local GameEventsTeamInfo teamInfo;
     local TeamGamePlus teamGame;
+    local class<GameEventsPublisherHelper> helper;
     local int i;
 
+    helper = class'GameEventsPublisherHelper';
 	arg = new class'GameEventArgs';
     arg.Name = CAPS(stateName);
     arg.InstigatorId = instigatorId;
@@ -129,8 +134,11 @@ static function GameEventArgs Create(LevelInfo Level, Name stateName, int instig
             playerInfo.Id = p.PlayerReplicationInfo.PlayerID;
             playerInfo.Index = i;
             playerInfo.Team = p.PlayerReplicationInfo.Team;
-            playerInfo.Name = p.PlayerReplicationInfo.PlayerName;
+            playerInfo.Name = helper.static.Replace(helper.static.Replace(p.PlayerReplicationInfo.PlayerName, " ", "\\t"), "\\", "\b");
             playerInfo.Score = p.PlayerReplicationInfo.Score;
+            playerInfo.DieCount = p.DieCount;
+            playerInfo.KillCount = p.KillCount;
+            playerInfo.Spree = p.Spree;
             if (PlayerPawn(p) != None) {
                 playerInfo.Ready = PlayerPawn(p).bReadyToPlay;
                 playerInfo.Password = PlayerPawn(p).Password;

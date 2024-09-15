@@ -8,10 +8,10 @@ var() globalconfig string   Path;
 var() globalconfig string   PasswordHeaderName;
 var() globalconfig string   Password;
 var() globalconfig bool     Debug;
-var() globalconfig string 	TeamInfoJson;
-var() globalconfig string 	PlayerInfoJson;
 var() globalconfig int      WaitingPlayersIntervalInSecs;
 var() globalconfig int      WaitingPlayersIntervalInSecsExpired;
+var() globalconfig string 	TeamInfoJson;
+var() globalconfig string 	PlayerInfoJson;
 
 DefaultProperties {
 	bEnabled=true
@@ -21,8 +21,8 @@ DefaultProperties {
 	PasswordHeaderName="Authorization"
 	Password=""
 	Debug=false
-    TeamInfoJson="%Name%,%Index%,%Score%"
-    PlayerInfoJson="%Name%,%Index%,%Id%,%Ready%,%Password%,%Team%"
 	WaitingPlayersIntervalInSecs=60
 	WaitingPlayersIntervalInSecsExpired=600
+	TeamInfoJson="%Index%,%Name%,%Score%"
+    PlayerInfoJson="%Id%,%Index%,%Name%,%Score%,%Ready%,%Password%,%Team%,%DieCount%,%KillCount%,%Spree%"
 }

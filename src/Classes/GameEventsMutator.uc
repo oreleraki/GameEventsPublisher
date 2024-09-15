@@ -14,7 +14,7 @@ function PreBeginPlay() {
 
     // bIsTournament = DeathMatchPlus(Level.Game).Default.bTournament;
     PrintHello();
-    // Log("[GameEvents]: Is Tournament ? "$bIsTournament);
+    // Log("++ [GameEndPublisher] Is Tournament ? "$bIsTournament);
     if (Config.bEnabled)
     {
         Manager = Level.Spawn(class'GameEventsManager', Self, 'EndGame');
@@ -32,7 +32,7 @@ function PreBeginPlay() {
 function PrintHello() {
     Log("");
     Log(" :============================================================:");
-    Log(" :    GameEventsMutator v0.3.1-alpha");
+    Log(" :    GameEventsMutator v0.3.2-alpha");
     Log(" :");
     Log(" :       ***  SETTINGS  ***");
     Log(" : bEnabled                            = " $ string(Config.bEnabled));
@@ -44,6 +44,8 @@ function PrintHello() {
     Log(" : Password                            = " $ Config.Password);
     Log(" : WaitingPlayersIntervalInSecs        = " $ string(Config.WaitingPlayersIntervalInSecs));
     Log(" : WaitingPlayersIntervalInSecsExpired = " $ string(Config.WaitingPlayersIntervalInSecsExpired));
+    Log(" : TeamInfoJson                        = " $ Config.TeamInfoJson);
+    Log(" : PlayerInfoJson                      = " $ Config.PlayerInfoJson);
     Log(" :============================================================:");
     Log("");
 }
